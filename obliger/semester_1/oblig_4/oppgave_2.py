@@ -73,25 +73,27 @@ def bet():
         print("that is not a number. try again\n")
     return
 
-def compare(player_value, dealer_value):
+def compare(player_value_in, dealer_value_in):
+    dealer_value = calculate_hand_value(dealer_value_in)
+    player_value= calculate_hand_value(player_value_in) 
     if dealer_value>21:
         print("the dealer had over 21. you won.")
+        
     elif player_value>dealer_value:
         print("you had more than the dealer. you won.")
     elif dealer_value>player_value:
         print("the dealer had more than you. you lost.")
     elif dealer_value==player_value:
         print("both had same cardvalue. it is a tie.")
-while True:
-    player_hand=[]
-    dealer_hand=[]
-    for x in range(1)
-        for hand in range(2):
-            player_hand.append(get_random_card())
-            dealer_hand.append(get_random_card())
-        print(f"The cards have been dealt. You have a {player_hand[0]} and a {player_hand[-1]}, with a total value of {calculate_hand_value(player_hand)}. The dealers visible card is a {dealer_hand[0]}, with     avalue of {calculate_hand_value(dealer_hand)}.")
-    
 
+player_hand=[]
+dealer_hand=[]
+for hand in range(2):
+    player_hand.append(get_random_card())
+    dealer_hand.append(get_random_card())
+print(f"The cards have been dealt. You have a {player_hand[0]} and a {player_hand[-1]}, with a total value of {calculate_hand_value(player_hand)}. The dealers visible card is a {dealer_hand[0]}, with a value of {calculate_hand_value(dealer_hand)}.")
+
+while True:
     try:
         action=int(input("Do you wish to hit, stand or quit?\n1 - Hit\n2 - Stand\n3 - Quit\n"))
     except ValueError:
@@ -101,19 +103,22 @@ while True:
         for hand in range(1):
             player_hand.append(get_random_card())
             dealer_hand.append(get_random_card())
-        print(f'you got {player_hand[-1]}')
 
         if calculate_hand_value(player_hand)>21:
             print(f'you got {player_hand[-1]}.\n')
             print(f'you have:\n')
-            for view in range(len(player_hand)):
-                print(f'{player_hand[view]}')
+            for cards in range(len(player_hand)):
+                print(f'{player_hand[cards]}')
             print(f"you had a total of {calculate_hand_value(player_hand)}. you lost.")
             player_hand.clear()
             dealer_hand.clear()
             choice=input("\nplay again? (y/n)")
             choice.lower()
             if choice=="y":
+                for hand in range(2):
+                    player_hand.append(get_random_card())
+                    dealer_hand.append(get_random_card())
+                print(f"The cards have been dealt. You have a {player_hand[0]} and a {player_hand[-1]}, with a total value of {calculate_hand_value(player_hand)}. The dealers visible card is a {dealer_hand[0]}, with a value of {calculate_hand_value(dealer_hand)}.")
                 continue
             elif choice=="n":
                 break
