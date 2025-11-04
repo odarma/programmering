@@ -137,6 +137,10 @@ while True:
             print(f'you have {player_hand} and a total value of {calculate_hand_value(player_hand)}')
             continue
 
+        elif calculate_hand_value(player_hand)==21:
+            total_chips += use_chips*2
+            print(f'you got Blackjack! you won {use_chips*2}')
+
     elif action == 2:
         while True: #gi kort til dealeren til mer eller mindre enn 17
             if calculate_hand_value(dealer_hand) <= 17:
@@ -164,7 +168,6 @@ while True:
             continue
         elif choice=="n": #avslutte
             break
-
 
     elif action == 3: #avslutte
         break
