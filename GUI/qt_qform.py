@@ -10,10 +10,11 @@ class Hovedvindu(QWidget):
         layout=QFormLayout()
         self.setLayout(layout)
 
-        layout.addRow('navn:', QLineEdit(self))
-        layout.addRow('epost:', QLineEdit(self))
-        layout.addRow('passord:', QLineEdit(self))
-        layout.addRow('bekreft passord:', QLineEdit(self))
+        layout.addRow('navn:', QLineEdit())
+        layout.addRow('epost:', QLineEdit())
+        layout.addRow('passord:', QLineEdit(echoMode=QLineEdit.EchoMode.Password))
+        layout.addRow('bekreft passord:', QLineEdit(echoMode=QLineEdit.EchoMode.Password))
+        layout.addRow(QPushButton('meld deg opp'))
 
         self.show()
 
