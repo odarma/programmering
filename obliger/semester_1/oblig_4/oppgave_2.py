@@ -1,5 +1,6 @@
-import random
-full_deck = {"Two of clubs": 2, 
+import random #kun 2 ark med kode til eksamen 
+
+full_deck = {"Two of clubs": 2, #dictionary av kortstokket
             "Three of clubs": 3, 
             "Four of clubs": 4, 
             "Five of clubs": 5, 
@@ -52,79 +53,144 @@ full_deck = {"Two of clubs": 2,
             "King of spades": 10,
             "Ace of spades": 11}
 
-def get_random_card():
+def get_random_card(): #tilfeldig velge kort-navn
     random_card= list(full_deck.keys())
     chosen_card=random.choice(random_card)
     return f'{chosen_card}'
 
-def get_card_value(card):
+def get_card_value(card): #vet ikke hvordan denne fungerer
     return full_deck[card]
 
 def calculate_hand_value(hand):
     hand_value = 0
     for card in hand:
         hand_value += get_card_value(card)
+        if card == 11 and hand_value<=10:
+            hand_value += get_card_value(card)
+        elif card == 11 and hand_value>10:
+            card = 1
+            hand_value += get_card_value(card)
     return hand_value
 
-def bet():
-    try:
-        int(input("how many chips do you bet?"))
-    except ValueError:
-        print("that is not a number. try again\n")
-    return
+#starten av spillet
+total_chips=int(input(f"how many chips do you want to have?"))
+use_chips=int(input(f"\nhow many chips do you want to bet?"))
+player_hand=[]
+dealer_hand=[]
+for hand in range(2):
+    player_hand.append(get_random_card())
+    dealer_hand.append(get_random_card())
+print(f"The cards have been dealt. You have a {player_hand[0]} and a {player_hand[-1]}, with a total value of {calculate_hand_value(player_hand)}. The dealers visible card is a {dealer_hand[0]}, and a total value of {calculate_hand_value(dealer_hand)}.")
 
-def compare(player_value, dealer_value):
-    if dealer_value>21:
+def compare(dealer_hand_in, player_hand_in): #sammenlikne kort-verdiene og chip-verdi
+    if calculate_hand_value(dealer_hand_in)>21: 
+        
         print("the dealer had over 21. you won.")
-    elif player_value>dealer_value:
+    elif calculate_hand_value(player_hand_in)>calculate_hand_value(dealer_hand_in):
+        
         print("you had more than the dealer. you won.")
-    elif dealer_value>player_value:
+    elif calculate_hand_value(dealer_hand_in)>calculate_hand_value(player_hand_in):
+        
         print("the dealer had more than you. you lost.")
-    elif dealer_value==player_value:
+    elif calculate_hand_value(dealer_hand_in)==calculate_hand_value(player_hand_in):
         print("both had same cardvalue. it is a tie.")
+
 while True:
-    player_hand=[]
-    dealer_hand=[]
-    for x in range(1)
-        for hand in range(2):
-            player_hand.append(get_random_card())
-            dealer_hand.append(get_random_card())
-        print(f"The cards have been dealt. You have a {player_hand[0]} and a {player_hand[-1]}, with a total value of {calculate_hand_value(player_hand)}. The dealers visible card is a {dealer_hand[0]}, with     avalue of {calculate_hand_value(dealer_hand)}.")
-    
-
-    try:
+    try: #sjekke om spilleren velger riktig valg
         action=int(input("Do you wish to hit, stand or quit?\n1 - Hit\n2 - Stand\n3 - Quit\n"))
+        if action >=4:
+            print(f'is not a choice. try again\n')
     except ValueError:
-        print("invalid. try again\n")
+        print("not a number. try again\n")
 
-    if action == 1:
+    if action == 1: #gi ut kortene til spilleren og dealeren
         for hand in range(1):
             player_hand.append(get_random_card())
             dealer_hand.append(get_random_card())
-        print(f'you got {player_hand[-1]}')
 
         if calculate_hand_value(player_hand)>21:
             print(f'you got {player_hand[-1]}.\n')
             print(f'you have:\n')
-            for view in range(len(player_hand)):
-                print(f'{player_hand[view]}')
-            print(f"you had a total of {calculate_hand_value(player_hand)}. you lost.")
+            for cards in range(len(player_hand)): #vise kortene i en fin rekkefølge
+                print(f'{player_hand[cards]}')
+            total_chips-=use_chips
+            print(f"you had a total of {calculate_hand_value(player_hand)}. you lost the game and have {total_chips}.")
             player_hand.clear()
             dealer_hand.clear()
             choice=input("\nplay again? (y/n)")
             choice.lower()
-            if choice=="y":
+            if choice=="y": #spille igjen
+                for hand in range(2):
+                    player_hand.append(get_random_card())
+                    dealer_hand.append(get_random_card())
+                print(f"The cards have been dealt. You have a {player_hand[0]} and a {player_hand[-1]}, with a total value of {calculate_hand_value(player_hand)}. The dealers visible card is a {dealer_hand[0]}, with a value of {calculate_hand_value(dealer_hand)}.")
+                use_chips=int(input(f"\nyou have {total_chips} chips.\nhow many chips do you want to bet?"))
                 continue
-            elif choice=="n":
+            elif choice=="n": #avslutte
                 break
 
-        elif calculate_hand_value(player_hand)<21:
+        elif calculate_hand_value(player_hand)<21: #fortsette runden
             print(f'you have {player_hand} and a total value of {calculate_hand_value(player_hand)}')
             continue
 
-    elif action == 2:
-        print(f'The dealers cards are:\n{dealer_hand}\nwith a value of {calculate_hand_value(dealer_hand)}\nyour cards are:\n{player_hand}\nwith a value of {calculate_hand_value(player_hand)}')
-        compare(player_hand,dealer_hand)
+        elif calculate_hand_value(player_hand)==21:
+            total_chips += use_chips*2
+            print(f'you got Blackjack! you won {use_chips*2} chips! you have {total_chips} chips!')
+            player_hand.clear()
+            dealer_hand.clear()
+            choice=input("\nplay again? (y/n)")
+            choice.lower()
+            if choice=="y": #spille igjen
+                for hand in range(2):
+                    player_hand.append(get_random_card())
+                    dealer_hand.append(get_random_card())
+                print(f"The cards have been dealt. You have a {player_hand[0]} and a {player_hand[-1]}, with a total value of {calculate_hand_value(player_hand)}. The dealers visible card is a {dealer_hand[0]}, with a value of {calculate_hand_value(dealer_hand)}.")
+                use_chips=int(input(f"\nyou have {total_chips} chips.\nhow many chips do you want to bet?"))
+                continue
+            elif choice=="n": #avslutte
+                break
 
-    elif action == 3:
+    elif action == 2:
+        while True: #gi kort til dealeren til mer eller mindre enn 17
+            if calculate_hand_value(dealer_hand) <= 17:
+                dealer_hand.append(get_random_card()) 
+            elif calculate_hand_value(dealer_hand) > 17:
+                break
+        print(f'\nThe dealers cards are:') #vise kortene på en fin rekkefølge
+        for x in dealer_hand:
+            print(x) 
+        print(f'with a value of {calculate_hand_value(dealer_hand)}\n\nyour cards are:')
+        for x in player_hand:
+            print(x)
+        print(f'with a value of {calculate_hand_value(player_hand)}\n')
+        
+        if calculate_hand_value(dealer_hand)>21: 
+            total_chips += use_chips
+            print(f"the dealer had over 21. you won the game and have {total_chips} chips")
+        elif calculate_hand_value(player_hand)>calculate_hand_value(dealer_hand):
+            total_chips += use_chips
+            print(f"you had more than the dealer. you won the game and have {total_chips} chips")
+        elif calculate_hand_value(dealer_hand)>calculate_hand_value(player_hand):
+            total_chips -= use_chips
+            print(f"the dealer had more than you. you lost the game and have {total_chips} chips")
+        elif calculate_hand_value(dealer_hand)==calculate_hand_value(player_hand):
+            print(f"both had same cardvalue. it is a tie.")
+        elif calculate_hand_value(player_hand) == 21:
+            total_chips += use_chips*2
+            print(f'you got Blackjack! you won {use_chips*2} and have {total_chips} chips')
+        player_hand.clear()
+        dealer_hand.clear()
+        choice=input("\nplay again? (y/n)")
+        choice.lower()
+        if choice=="y": #spille igjen
+            for hand in range(2):
+                player_hand.append(get_random_card())
+                dealer_hand.append(get_random_card())
+            print(f"The cards have been dealt. You have a {player_hand[0]} and a {player_hand[-1]}, with a total value of {calculate_hand_value(player_hand)}. The dealers visible card is a {dealer_hand[0]}, with a value of {calculate_hand_value(dealer_hand)}.")
+            use_chips=int(input(f"\nyou have {total_chips} chips.\nhow many chips do you want to bet?"))
+            continue
+        elif choice=="n": #avslutte
+            break
+
+    elif action == 3: #avslutte
         break
