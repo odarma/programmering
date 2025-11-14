@@ -1,24 +1,27 @@
 def print_ware_information(ware):
     #Funksjonsbeskrivelse: Printer ut informasjon om en spesifisert vare.
-    #print(f'{ware[0]}: {ware[1]}')
-    #print(f'{ware}')
+    print(f'name: {ware['name']}\nprice: {ware['price']}kr\nnumber in stock: {ware['number_in_stock']}\nratings: {ware['ratings']}\ndescription: {ware['description']}\n')
     return 
     
 def calculate_average_ware_rating(ware):
     #Returnerer den gjennomsnittlige ratingen for en spesifisert vare.
     total_rating =0
     average_rating =0
-    for rating in ware["ratings"]:
-            total_rating+=rating
-    average_rating+=total_rating/len(ware["ratings"])
+    try: #sjekker om varen har ratings og regner ut
+        for rating in ware["ratings"]:
+                total_rating+=rating
+        average_rating+=total_rating/len(ware["ratings"])
+    except ZeroDivisionError:
+        return f'{ware['name']} has no ratings.'
     return average_rating
 
 def get_all_wares_in_stock(all_wares):
     #Returnerer en dictionary med alle varer som er på lager.
+    ware_in_stock = {}
     for nested_keys,nested_value in all_wares.items():
         if is_ware_in_stock(nested_value) == True:
-            print(nested_value.items())
-            #return nested_value #returnerer en dictionary
+            ware_in_stock[nested_keys] = nested_value
+    return ware_in_stock #returnerer dictionary
 
 def is_number_of_ware_in_stock(ware, number_of_ware):
     #Returnerer en Boolean-verdi som representerer om et spesifisert antall av en gitt vare finnes på lager.

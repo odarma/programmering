@@ -26,11 +26,12 @@ all_wares = {
 
 # Filtrer ut alle varer som er på lager og skriv ut informasjonen for hver av dem
 all_wares_in_stock = ws.get_all_wares_in_stock(all_wares)
-print(all_wares_in_stock)
 for ware in all_wares_in_stock.values():
     ws.print_ware_information(ware)
 # Skriv ut den gjennomsnittlige ratingen for denne varen
 print(f"\nAverage rating for the AMD Processor: {ws.calculate_average_ware_rating(all_wares['amd_processor'])}\n")
+print(f"\nAverage rating for the playstation 5: {ws.calculate_average_ware_rating(all_wares['playstation_5'])}\n")
+print(f"\nAverage rating for the hdmi cable: {ws.calculate_average_ware_rating(all_wares['hdmi_cable'])}\n")
 
 # Oppretter en tom handlevogn
 shopping_cart = {}
