@@ -28,20 +28,28 @@ all_wares = {
 all_wares_in_stock = ws.get_all_wares_in_stock(all_wares)
 for ware in all_wares_in_stock.values():
     ws.print_ware_information(ware)
-# Skriv ut den gjennomsnittlige ratingen for denne varen
+# Skriv ut den gjennomsnittlige ratingen for varene
 print(f"\nAverage rating for the AMD Processor: {ws.calculate_average_ware_rating(all_wares['amd_processor'])}\n")
 print(f"\nAverage rating for the playstation 5: {ws.calculate_average_ware_rating(all_wares['playstation_5'])}\n")
 print(f"\nAverage rating for the hdmi cable: {ws.calculate_average_ware_rating(all_wares['hdmi_cable'])}\n")
 
+# sjekker om et spesifikt antall varer finnes i lager
+for nested_key in all_wares.keys():
+    print(f'{nested_key}\n')
+answer = ws.is_number_of_ware_in_stock(all_wares[input('which ware do you want to check that we have in stock? copy the name of the ware from above\n')],int(input('\nhow many do you want to check that we should have?\n')))
+if answer == True:
+    print('we have less than that in stock.\n')
+else:
+    print('we have more than that in stock.\n')
+
 # Oppretter en tom handlevogn
 shopping_cart = {}
 
-# Forsøker å legge til 1 amd processor, 2 playstation 5 konsoller og 3 hdmi kabler
-
-ws.add_number_of_ware_to_shopping_cart("amd_processor", all_wares["amd_processor"], shopping_cart, 1)
-ws.add_number_of_ware_to_shopping_cart ("playstation_5", all_wares["playstation_5"], shopping_cart, 2)
+# Forsøker å legge til varene
+ws.add_number_of_ware_to_shopping_cart("amd_processor", all_wares["amd_processor"], shopping_cart, input('how many amd processors to add in cart?'))
+ws.add_number_of_ware_to_shopping_cart ("playstation_5", all_wares["playstation_5"], shopping_cart, input('how many playstations to add in cart?'))
 ws.add_number_of_ware_to_shopping_cart ("hdmi_cable", all_wares["hdmi_cable"],
-shopping_cart, 3)
+shopping_cart, input('how many hdmi cables to add in cart?'))
 
 # skriver ut handlevognen
 print(f"\nThe shopping cart: {shopping_cart}\n")
