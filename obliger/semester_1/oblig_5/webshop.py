@@ -19,44 +19,53 @@ def get_all_wares_in_stock(all_wares):
     #Returnerer en dictionary med alle varer som er på lager.
     ware_in_stock = {}
     for nested_keys,nested_value in all_wares.items():
-        if is_ware_in_stock(nested_value) == True:
+        if is_ware_in_stock(nested_value) == False:
             ware_in_stock[nested_keys] = nested_value
     return ware_in_stock #returnerer dictionary
 
-def is_number_of_ware_in_stock(ware, number_of_ware):#dictionaryen printes ut
+def is_number_of_ware_in_stock(ware,amount):#dictionaryen printes ut
     #Returnerer en Boolean-verdi som representerer om et spesifisert antall av en gitt vare finnes på lager.
-    for nested_keys,nested_value in wares.items():
-        if is_ware_in_stock(nested_value,number_of_ware) == True:
-            return True
+    if is_ware_in_stock(ware,amount) == True:
+        return True
 
 
-def add_number_of_ware_to_shopping_cart(ware_key, ware, shopping_cart,number_of_ware=1):
+def add_number_of_ware_to_shopping_cart(ware_key, ware, shopping_cart,number_of_ware):
     #Legger til et spesifisert antall av en gitt vare i en spesifisert handlevogn.
-    if number_of_ware<=ware["number_in_stock"]:
+    if ware["number_in_stock"]==0:
+        shopping_cart[ware_key] = 1
+    
+    elif number_of_ware<=ware["number_in_stock"]:
         shopping_cart[ware_key] = number_of_ware
+        
     else:
         shopping_cart[ware_key] = ware["number_in_stock"]
+       
     return shopping_cart
 
-def calculate_shopping_cart_price(shopping_cart, all_wares, tax):
+def calculate_shopping_cart_price(shopping_cart, wares, tax=1.25):
     #Returnerer prisen av en handlevogn basert på varene i den.
-    return
+    #for nested_keys, nested_values in wares.items():
+    #    print(nested_values)
+    for cart in shopping_cart:
+        cart = list(cart.items(),cart.values())
+    print(cart)
+        
+    #return shopping_cart
 
-def can_afford_shopping_cart(shopping_cart_price, wallet):
-    #Returnerer en Boolean-verdi basert på om det er nok penger i en gitt lommebok for å kjøpe en handlevogn.
-    return
-
-def buy_shopping_cart():
-    #Kjøper varene i en handlevogn. Parameterene defineres i oppgaven.#
-    return
+#def can_afford_shopping_cart(shopping_cart_price, wallet):
+#    #Returnerer en Boolean-verdi basert på om det er nok penger i en gitt lommebok for å kjøpe en handlevogn.
+#    return
+#
+#def buy_shopping_cart():
+#    #Kjøper varene i en handlevogn. Parameterene defineres i oppgaven.#
+#    return
 
 #------------------------------------------
 # Predefinerte funksjoner
 #------------------------------------------
 def is_ware_in_stock(ware, number=1):
     #Returnerer en Boolean-verdi som representerer om en vare er på lager.#
-    print(ware)
-    if ware["number_in_stock"] >= number:
+    if ware["number_in_stock"] <= number:
         return True
     else:
         return False

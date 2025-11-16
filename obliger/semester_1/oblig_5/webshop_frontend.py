@@ -34,32 +34,35 @@ print(f"\nAverage rating for the playstation 5: {ws.calculate_average_ware_ratin
 print(f"\nAverage rating for the hdmi cable: {ws.calculate_average_ware_rating(all_wares['hdmi_cable'])}\n")
 
 # sjekker om et spesifikt antall varer finnes i lager
-for nested_key in all_wares.keys():
-    print(f'{nested_key}\n')
-answer = ws.is_number_of_ware_in_stock(all_wares[input('which ware do you want to check that we have in stock? copy the name of the ware from above\n')],int(input('\nhow many do you want to check that we should have?\n')))
-if answer == True:
-    print('we have less than that in stock.\n')
-else:
-    print('we have more than that in stock.\n')
+#for nested_key in all_wares.keys():
+#    print(f'{nested_key}\n')
+#if ws.is_number_of_ware_in_stock(all_wares[input('which ware do you want to check that we have in stock? copy the #name of the ware from above\n')],int(input('\nhow many do you want to check #that we should have?\n'))) == True:
+#    print('we have less than that in stock.\n')
+#else:
+#    print('we have more than that in stock.\n')
 
 # Oppretter en tom handlevogn
 shopping_cart = {}
 
 # Forsøker å legge til varene
-ws.add_number_of_ware_to_shopping_cart("amd_processor", all_wares["amd_processor"], shopping_cart, input('how many amd processors to add in cart?'))
-ws.add_number_of_ware_to_shopping_cart ("playstation_5", all_wares["playstation_5"], shopping_cart, input('how many playstations to add in cart?'))
-ws.add_number_of_ware_to_shopping_cart ("hdmi_cable", all_wares["hdmi_cable"],
-shopping_cart, input('how many hdmi cables to add in cart?'))
+ws.add_number_of_ware_to_shopping_cart("amd_processor", all_wares["amd_processor"], shopping_cart, int(input('how many amd processors to add in cart?')))
+ws.add_number_of_ware_to_shopping_cart ("playstation_5", all_wares["playstation_5"], shopping_cart, int(input('how many playstations to add in cart?')))
+ws.add_number_of_ware_to_shopping_cart ("hdmi_cable", all_wares["hdmi_cable"], shopping_cart, int(input('how many hdmi cables to add in cart?')))
 
 # skriver ut handlevognen
-print(f"\nThe shopping cart: {shopping_cart}\n")
+#print(f"\nThe shopping cart:\n")
+#for ware,amount in shopping_cart.items():
+#    print(f"{ware}: {amount}")
+
+
+# regne ut pris med skatt
+ws.calculate_shopping_cart_price(shopping_cart,all_wares)
 
 # Oppretter en lommebok som inneholder 10000 kr
-wallet = Wallet(10000)
+#wallet = Wallet(10000)
 
 # Forsøker å kjøpe varene i handlevognen
-ws.buy_shopping_cart('Parameterne blir definert i oppgaven')
-print()
+#ws.buy_shopping_cart()
 
 # Skriver ut mengden penger i lommeboka etter kjøpet
-print(f"The amount in the wallet after the purchase: {wallet.get_amount()}")
+#print(f"The amount in the wallet after the purchase: {wallet.get_amount()}")
