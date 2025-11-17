@@ -26,6 +26,7 @@ all_wares = {
 
 # Filtrer ut alle varer som er på lager og skriv ut informasjonen for hver av dem
 all_wares_in_stock = ws.get_all_wares_in_stock(all_wares)
+print('these items are in stock:\n')
 for ware in all_wares_in_stock.values():
     ws.print_ware_information(ware)
 # Skriv ut den gjennomsnittlige ratingen for varene
@@ -34,12 +35,12 @@ print(f"\nAverage rating for the playstation 5: {ws.calculate_average_ware_ratin
 print(f"\nAverage rating for the hdmi cable: {ws.calculate_average_ware_rating(all_wares['hdmi_cable'])}\n")
 
 # sjekker om et spesifikt antall varer finnes i lager
-#for nested_key in all_wares.keys():
-#    print(f'{nested_key}\n')
-#if ws.is_number_of_ware_in_stock(all_wares[input('which ware do you want to check that we have in stock? copy the #name of the ware from above\n')],int(input('\nhow many do you want to check #that we should have?\n'))) == True:
-#    print('we have less than that in stock.\n')
-#else:
-#    print('we have more than that in stock.\n')
+for nested_key in all_wares.keys():
+    print(f'{nested_key}\n')
+if ws.is_number_of_ware_in_stock(all_wares[input('which ware do you want to check that we have in stock? copy the name of the ware from above\n')],int(input('\nhow many do you want to check that we should have?\n'))) == True:
+    print('we have less than that in stock.\n')
+else:
+    print('we have more than that in stock.\n')
 
 # Oppretter en tom handlevogn
 shopping_cart = {}
@@ -50,13 +51,13 @@ ws.add_number_of_ware_to_shopping_cart ("playstation_5", all_wares["playstation_
 ws.add_number_of_ware_to_shopping_cart ("hdmi_cable", all_wares["hdmi_cable"], shopping_cart, int(input('how many hdmi cables to add in cart?')))
 
 # skriver ut handlevognen
-#print(f"\nThe shopping cart:\n")
-#for ware,amount in shopping_cart.items():
-#    print(f"{ware}: {amount}")
+print(f"\nThe shopping cart:\n")
+for ware,amount in shopping_cart.items():
+    print(f"{ware}: {amount} pieces")
 
-
-# regne ut pris med skatt
-ws.calculate_shopping_cart_price(shopping_cart,all_wares)
+# regne ut pris med skatt og antall og printe ut
+for nested_key,nested_value in ws.calculate_shopping_cart_price(shopping_cart,all_wares).items():
+    print(f'\n{nested_key} : {nested_value}')
 
 # Oppretter en lommebok som inneholder 10000 kr
 #wallet = Wallet(10000)

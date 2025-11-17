@@ -10,7 +10,7 @@ def calculate_average_ware_rating(ware):
     try: #sjekker om varen har ratings og regner ut
         for rating in ware["ratings"]:
                 total_rating+=rating
-        average_rating+=total_rating/len(ware["ratings"])
+        average_rating+=round(total_rating/len(ware["ratings"]),2)
     except ZeroDivisionError:
         return f'{ware['name']} has no ratings.'
     return average_rating
@@ -44,13 +44,11 @@ def add_number_of_ware_to_shopping_cart(ware_key, ware, shopping_cart,number_of_
 
 def calculate_shopping_cart_price(shopping_cart, wares, tax=1.25):
     #Returnerer prisen av en handlevogn basert på varene i den.
-    #for nested_keys, nested_values in wares.items():
-    #    print(nested_values)
-    for cart in shopping_cart:
-        cart = list(cart.items(),cart.values())
-    print(cart)
-        
-    #return shopping_cart
+    updated_shopping_cart = {} 
+    for key,(nested_key,nested_value) in zip(shopping_cart, wares.items()): #bruke zip til å iterere gjennom dictionary-ene samtidig
+        if key == nested_key:
+            updated_shopping_cart[key] = {'amount' : shopping_cart[key],'price' : nested_value['price']*shopping_cart[key]*tax}
+    return updated_shopping_cart
 
 #def can_afford_shopping_cart(shopping_cart_price, wallet):
 #    #Returnerer en Boolean-verdi basert på om det er nok penger i en gitt lommebok for å kjøpe en handlevogn.
