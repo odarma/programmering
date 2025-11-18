@@ -1,3 +1,5 @@
+#oppgave 7 finner du nederst i siden
+
 from datetime import date
 car_register = {
     "toyotaBZ4X": {
@@ -28,13 +30,13 @@ car_register = {
     "km": 0
     },
 }
-NEW_CAR_REGISTRATION_FEE = 8745
+NEW_CAR_REGISTRATION_FEE = 10783
 RENT_CAR_PERCENTAGE = 0.4
 RENT_NEW_CAR__FEE = 1000
 def print_car_information(car):
     # Oppgave 3.1
     print(f'brand: {car['brand']}\nmodel: {car['model']}\nprice: {car['price']}kr\nmanufactured: {car['month']} - {car['year']}')
-    if car['new'] == True:
+    if is_new(car) == True:
         print('condition: new')
     else:
         print('condition: used')
@@ -48,27 +50,37 @@ def create_car(car_register, brand, model, price, year, month, new, km):
 def get_car_age(car):
     # Oppgave 3.3
     for x,y in car.items():
-        print(f'{y['brand'],y['model']} is {2025 - y['year']} years old')
+        print(f'{y['brand']} {y['model']} is {2025 - y['year']} years old')
     return
 
 def rent_car_monthly_price(car):
     # Oppgave 3.4
-    monthly_price = car['price'] * 1.40
-    if car['new'] == True:
-        monthly_price+=1000
+    monthly_price = (calculate_total_price(car)*RENT_CAR_PERCENTAGE)/12
+    if is_new(car) == True:
+        monthly_price+=RENT_NEW_CAR__FEE
     return round(monthly_price,2)
 
 def next_eu_control(car):
     # Oppgave 3.5
-    pass
+    year = 0
+    for x in range(car['year'],date.today().year+2,2):
+        year = x
+    return date(year,car['month'],1)
 
 def calculate_total_price(car):
     # Oppgave 3.6
     total_price = car['price']
-    if car['new'] == True:
-        total_price+=10783
-    if 
-    return 
+    age=date.today().year-car['year']
+    if is_new(car) == True:
+        total_price+=NEW_CAR_REGISTRATION_FEE
+    else:
+        if 0<=age<=3:
+            total_price+=6681
+        elif 4<=age<=11:
+            total_price+=4034
+        elif 12<=age<=29:
+            total_price+=1729
+    return total_price
 
 def is_new(car):
     return car['new']
@@ -86,3 +98,13 @@ if __name__ == '__main__':
     print(f"Next EU-control for the {audi['brand']} {audi['model']} is {next_eu_control(audi)}")
     print(f"If you want to rent the {audi['brand']} {audi['model']} the monthly fee will be {rent_car_monthly_price(audi)}kr.\n")
     get_car_age(car_register)
+
+
+class info_about_car:
+    def __init__(self,brand, model, price, year, month, new, km):
+        pass
+
+    def print_in_clear_format(self):
+        pass # denne metoden passer i klassen fordi da kan infoen vises med god oversikt
+
+    
