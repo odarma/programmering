@@ -105,6 +105,10 @@ class info_about_car:
         pass
 
     def print_in_clear_format(self):
-        pass # denne metoden passer i klassen fordi da kan infoen vises med god oversikt
+        pass # denne metoden passer i klassen fordi da kan infoen vises med god oversikt og trenger ikke å skrive print det og det repeterende
 
-    
+    def calculate_total_price(self):
+        pass # fordi metoden kan gjenbrukes flere ganger
+
+    def next_eu_control(self):
+        pass #fordi metoden kan gjenbrukes flere ganger
